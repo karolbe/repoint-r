@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            class="com.emc.repoint.scripts.dfc.DfcView"
+            id="com.emc.repoint.scripts.dfcScriptingView"
+            name="DFC Scripting View"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension targetID="com.documentum.devprog.eclipsePlugin.perspectivesExtension.dmPerspective">
+         <view
+               closeable="true"
+               id="com.emc.repoint.scripts.dfcScriptingView"
+               moveable="true"
+               relationship="stack"
+               relative="com.documentum.devprog.eclipsePlugin.viewExtension.docbaseItemListView"
+               showTitle="true"
+               standalone="true"
+               visible="true"/>
+      </perspectiveExtension>
+   </extension>
+
+</plugin>
