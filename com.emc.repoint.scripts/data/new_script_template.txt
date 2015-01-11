@@ -1,0 +1,32 @@
+//DFC Imports
+import com.documentum.fc.client.*;
+import com.documentum.fc.common.*;
+import com.documentum.operations.*;
+
+//Repoint Imports
+import com.documentum.devprog.eclipse.common.*;
+
+IDfSessionManager sMgr = PluginState.getSessionManager();
+String docbase = PluginState.getDocbase(); //gets current docbase 
+IDfSession session = sMgr.getSession(docbase);
+IDfCollection coll = null;
+
+try
+{
+
+//type your code here
+
+}
+catch(Exception ex)
+{
+	ex.printStackTrace();
+}
+finally
+{
+	if(coll != null)
+		try{coll.close();}catch(DfException dfeClose){}
+	
+	if(session != null)
+		sMgr.release(session);
+}
+

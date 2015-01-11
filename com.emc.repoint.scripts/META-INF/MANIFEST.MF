@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Scripts Plug-in
+Bundle-SymbolicName: com.emc.repoint.scripts;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: com.emc.repoint.scripts.Activator
+Bundle-Vendor: EMC
+Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ com.documentum.dfc,
+ com.documentum.devprog.eclipsePlugin
+Eclipse-LazyStart: true
+Export-Package: bsh,
+ bsh.classpath,
+ bsh.collection,
+ bsh.commands,
+ bsh.org.objectweb.asm,
+ bsh.reflect,
+ bsh.servlet,
+ bsh.util
+Bundle-ClassPath: lib/bsh-2.0b4.jar,
+ .
