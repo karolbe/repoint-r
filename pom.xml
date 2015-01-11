@@ -51,7 +51,7 @@ Contributors:
 						<environment>
 							<os>win32</os>
 							<ws>win32</ws>
-							<arch>x86_64</arch>
+							<arch>x86</arch>
 						</environment>
 						<environment>
 							<os>linux</os>

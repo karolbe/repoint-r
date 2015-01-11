@@ -37,7 +37,7 @@ Bundle-ClassPath: lib/ci.jar,
  lib/dfcbase.jar,
  lib/xalan.jar,
  lib/xercesImpl.jar,
- lib/xmlParserAPIs.jar
+ lib/config.jar
 Bundle-Vendor: metasys.com
 Export-Package: app.macbinary,
  app.macbinary.cmd,
@@ -848,3 +848,4 @@ Export-Package: app.macbinary,
  xtrim.webservice,
  xtrim.widget
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Eclipse-BundleShape: dir

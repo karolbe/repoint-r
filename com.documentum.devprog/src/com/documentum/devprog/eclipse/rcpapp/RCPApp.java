@@ -26,8 +26,8 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  * 
-  *******************************************************************************/
+ ï¿½*ï¿½
+ ï¿½*******************************************************************************/
 
 /*
  * Created on Jun 24, 2005
@@ -37,17 +37,16 @@
 package com.documentum.devprog.eclipse.rcpapp;
 
 import com.documentum.devprog.eclipse.common.DFCConfigurationHelper;
-import com.documentum.devprog.eclipse.common.PluginState;
 
-import org.eclipse.core.runtime.IPlatformRunnable;
+import org.eclipse.equinox.app.IApplication;
+import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 
-public class RCPApp implements IPlatformRunnable {
+public class RCPApp implements IApplication {
 
-	public Object run(Object args) throws Exception {
+	public Object start(IApplicationContext context) throws Exception {
 
 		// System.out.println(new File("").getAbsolutePath());
 
@@ -55,23 +54,27 @@ public class RCPApp implements IPlatformRunnable {
 		Display disp = PlatformUI.createDisplay();
 		int rcode = DFCConfigurationHelper.configureDfcJars(false);
 		if (rcode < 0) {
-			return IPlatformRunnable.EXIT_RESTART;
+			return IApplication.EXIT_RESTART;
 		}
 		try {
 
 			int returnCode = PlatformUI.createAndRunWorkbench(disp,
 					wbenchAdvisor);
 			if (returnCode == PlatformUI.RETURN_RESTART) {
-				return IPlatformRunnable.EXIT_RESTART;
+				return IApplication.EXIT_RESTART;
 
 			} else {
-				return IPlatformRunnable.EXIT_OK;
+				return IApplication.EXIT_OK;
 			}
 		} finally {
 			if (disp != null) {
 				disp.dispose();
 			}
 		}
+	}
+
+	public void stop() {
+		
 	}
 
 }
