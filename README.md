@@ -8,6 +8,7 @@ Goal of this project is to:
 * add support for editing ACLs
 * add Trusted Content Services support
 * add support for creating sessions without need of modifying dfc.properties
+* whenever possible update RCP code and remove deprecated fragments (in progress...)
 * ...
 
 * fix bugs 
