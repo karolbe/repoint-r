@@ -26,8 +26,8 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
- *******************************************************************************/
+ï¿½*ï¿½
+ï¿½*******************************************************************************/
 
 /*
  * Created on Apr 29, 2004
@@ -37,13 +37,17 @@
  */
 package com.documentum.devprog.eclipse;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.apache.log4j.PropertyConfigurator;
 import org.eclipse.core.runtime.IPluginDescriptor;
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.service.prefs.Preferences;
 
 /**
  * 
@@ -98,16 +102,15 @@ public class DevprogPlugin extends AbstractUIPlugin {
 	/**
 	 * The constructor.
 	 */
-	public DevprogPlugin(IPluginDescriptor descriptor) {
-		super(descriptor);
+	public DevprogPlugin() {
+		super();
 		plugin = this;
-
+		
 		// configureLog4j();
-
 		// This is necessary for DFC to work correctly.
-		Thread.currentThread().setContextClassLoader(
+/*		Thread.currentThread().setContextClassLoader(
 				getClass().getClassLoader());
-
+*/
 		try {
 			resourceBundle = ResourceBundle
 					.getBundle("com.documentum.devprog.DevprogPluginResources");

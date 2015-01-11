@@ -2,4 +2,8 @@
 <?eclipse version="3.4"?>
 <plugin>
 
+<runtime>
+    <library name="lib/config.jar"><export name="*"/></library>
+</runtime>
+
 </plugin>
