@@ -42,7 +42,7 @@ Contributors:
 				<configuration>
 					<target>
 						<artifact>
-							<groupId>repoint-r.group</groupId>
+							<groupId>repoint-r</groupId>
 							<artifactId>helios</artifactId>
 							<version>1.0.0-SNAPSHOT</version>
 						</artifact>
