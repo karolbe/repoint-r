@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="EMC Documentum Repository Interrogation Utility (Repoint)" uid="Repoint" id="com.documentum.devprog.eclipsePlugin.RepointProduct" application="com.documentum.devprog.eclipsePlugin.RepointApp" useFeatures="true" includeLaunchers="true">
+<product name="EMC Documentum Repository Interrogation Utility (Repoint)" uid="Repoint" id="com.documentum.devprog.eclipsePlugin.RepointProduct" application="com.documentum.devprog.eclipsePlugin.RepointApp" useFeatures="true" includeLaunchers="true" version="1.0">
 
    <aboutInfo>
       <image path="/com.documentum.devprog/icons/emc_yellowbk_48.gif"/>
       <text>
-         Repository Interrogation Utility
-EMC Developer Network 2006
+         Repository Interrogation Utility EMC Developer Network 2006
       </text>
    </aboutInfo>
 
