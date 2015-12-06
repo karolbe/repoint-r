@@ -1,0 +1,14 @@
+METH=append
+INFO= dmAPISet("append,session,object_ id,attribute[,pattern]", "value") 
+METH=setcontent
+INFO= dmAPISet("setcontent,session,object_id[,format] [,page_number][,length][,set_resource]","content") 
+METH=appendcontent
+INFO= dmAPISet("appendcontent,session,object_ id[,length][,set_resource]", "content") 
+METH=set
+INFO= dmAPISet("set,session,object_id,attribute[[index]] [,pattern]","value|alias") 
+METH=insert
+INFO= dmAPISet("insert,sesion,object_id,attribute[[index]] [,pattern]","value") 
+METH=register
+INFO= dmAPISet("register,session,object_id,event[,priority] [,send_mail]","message") 
+METH=insertcontent
+INFO= dmAPISet("insertcontent,session,object_id[,page_number] [,length][,set_resource]","content") 
