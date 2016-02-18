@@ -1,33 +1,33 @@
 /*******************************************************************************
- * Copyright (c) 2005-2006, EMC Corporation 
+ * Copyright (c) 2005-2006, EMC Corporation
  * All rights reserved.
 
- * Redistribution and use in source and binary forms, 
- * with or without modification, are permitted provided that 
+ * Redistribution and use in source and binary forms,
+ * with or without modification, are permitted provided that
  * the following conditions are met:
  *
- * - Redistributions of source code must retain the above copyright 
+ * - Redistributions of source code must retain the above copyright
  *   notice, this list of conditions and the following disclaimer.
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the name of the EMC Corporation nor the names of its 
+ * - Neither the name of the EMC Corporation nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR 
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
  * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY 
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
- *******************************************************************************/
+ï¿½*ï¿½
+ï¿½*******************************************************************************/
 
 /*
  * Created on Mar 28, 2006
@@ -36,30 +36,22 @@
  */
 package com.documentum.devprog.eclipse.libraryfunc;
 
-import com.documentum.fc.common.IDfId;
-
+import com.documentum.devprog.eclipse.common.PluginState;
+import com.documentum.devprog.eclipse.tree.DocbaseItem;
 import com.documentum.fc.client.IDfSession;
 import com.documentum.fc.client.IDfSysObject;
 import com.documentum.fc.client.IDfVersionPolicy;
-
-import com.documentum.devprog.eclipse.common.PluginState;
-import com.documentum.devprog.eclipse.tree.DocbaseItem;
-
+import com.documentum.fc.common.IDfId;
+import com.documentum.operations.IDfCheckinOperation;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.progress.IProgressConstants;
 
-import com.documentum.operations.IDfCheckinOperation;
+import java.io.File;
 
 public class CheckinComposite extends Composite {
 
@@ -187,14 +179,22 @@ public class CheckinComposite extends Composite {
 		butCheckinFile.setText("Browse");
 		butCheckinFile
 				.addSelectionListener(new org.eclipse.swt.events.SelectionAdapter() {
-					public void widgetSelected(
-							org.eclipse.swt.events.SelectionEvent e) {
-						System.out.println("widgetSelected()"); // TODO
-																// Auto-generated
-																// Event stub
-																// widgetSelected()
-					}
-				});
+                    public void widgetSelected(
+                            org.eclipse.swt.events.SelectionEvent e) {
+                        FileDialog fd = new FileDialog(CheckinComposite.this
+                                .getShell());
+                        String file = fd.open();
+                        if (file != null) {
+                            try {
+                                txtFile.setText(file);
+                                File fl = new File(file);
+                                txtFile.setText(fl.getName());
+                            } catch (Exception dfei) {
+                            }
+
+                        }
+                    }
+                });
 		label12 = new Label(this, SWT.NONE);
 		this.setLayout(gridLayout);
 		setSize(new org.eclipse.swt.graphics.Point(395, 300));

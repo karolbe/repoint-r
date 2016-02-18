@@ -2,8 +2,114 @@
 <?eclipse version="3.4"?>
 <plugin>
 
-<runtime>
-    <library name="lib/config.jar"><export name="*"/></library>
-</runtime>
-
+    <runtime>
+        <library name="lib/config.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/activation.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/All-MB.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/aspectjrt.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/bpmutil.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/certjFIPS.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/ci.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/collaboration.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/commons-codec-1.3.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/commons-lang-2.4.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/config.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/configservice-api.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/configservice-impl.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/DDS.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/dfcbase.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/dfc.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/DmcRecords.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/dms-client-api.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/jaxb-api.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/jaxb-impl.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/jcifs-krb5-1.3.1.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/jsafeFIPS.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/jsr173_api.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/krbutil.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/log4j.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/messageArchive.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/messageService.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/subscription.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/vsj-license.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/vsj-standard-3.3.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/workflow.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/xalan.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/xercesImpl.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/xml-apis.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/xtrim-api.jar">
+            <export name="*"/>
+        </library>
+        <library name="lib/xtrim-server.jar">
+            <export name="*"/>
+        </library>
+    </runtime>
 </plugin>
