@@ -2,173 +2,197 @@
 <?eclipse version="3.0"?>
 <plugin>
 
-   
-   <extension-point id="repoTreeAction" name="Repo Navigation Tree Menu" schema="schema/repoTreeAction.exsd"/>
-   <extension-point id="typeTreeAction" name="Repo Type Tree Extension" schema="schema/typeTreeExtension.exsd"/>
-   <extension-point id="propViewAction" name="Properties View Extension" schema="schema/propViewExtension.exsd"/>
-   
-   <extension 
-   		id="com.documentum.devprog.eclipsePlugin.viewExtension"
-   		name="Devprog Workspace Extenstion"
-   		point="org.eclipse.ui.views">
-   		
-   		<category name="EMC Repoint" id="com.documentum.devprog.eclipse.repoint" /> 
-   		
-   		<view
-   			name="Repository Browser"
-   			icon="icons/logo_16.gif"
-   			category="com.documentum.devprog.eclipse.repoint"
-   			class="com.documentum.devprog.eclipse.tree.DocbaseTreeView"
-   			id="com.documentum.devprog.eclipsePlugin.viewExtension.treeView"
-   			
-   		/>
-   		
-   		<view 
-   			name="Repository Object Properties Dump"
-   			icon="icons/logo_16.gif"
-   			category="com.documentum.devprog.eclipse.repoint"
-   			class="com.documentum.devprog.eclipse.properties.PropertiesView"
-   			id="com.documentum.devprog.eclipsePlugin.viewExtension.propertiesView"
-   			
-   		/>
-   		
-   		<view 
-   			name="Type Tree"
-   			icon="icons/logo_16.gif"
-   			category="com.documentum.devprog.eclipse.repoint"
-   			class="com.documentum.devprog.eclipse.types.TypeView"
-   			id="com.documentum.devprog.eclipsePlugin.viewExtension.typeTreeView"
-   			
-   		/>
-   		
-   		<view 
-   			name="Query View"
-   			icon="icons/logo_16.gif"
-   			category="com.documentum.devprog.eclipse.repoint"
-   			class="com.documentum.devprog.eclipse.query.QueryView"
-   			id="com.documentum.devprog.eclipsePlugin.viewExtension.queryView"
-   			
-   		/>
-   		
-   		<view 
-   			name="API View"
-   			icon="icons/logo_16.gif"
-   			category="com.documentum.devprog.eclipse.repoint"
-   			class="com.documentum.devprog.eclipse.api.ApiView"
-   			id="com.documentum.devprog.eclipsePlugin.viewExtension.apiView"
-   			
-   		/>
-   		
-   		<view
-            name="Progress View"
-            icon="icons/pview.gif"
-            category="org.eclipse.ui"
-            class="org.eclipse.ui.ExtensionFactory:progressView"
-            id="org.eclipse.ui.views.ProgressView">
-      </view>
-      
-      <view
-            name="SBO View"
-            icon="icons/logo_16.gif"
-            category="com.documentum.devprog.eclipse.repoint"
-            class="com.documentum.devprog.eclipse.bof.BOFView"
-            id="com.documentum.devprog.eclipsePlugin.viewExtension.bofView"
-            
-            >
-      </view>
-      <view
-            allowMultiple="false"
-            category="com.documentum.devprog.eclipse.repoint"
-            class="com.documentum.devprog.eclipse.traceview.TraceView"
-            icon="icons/logo_16.gif"
-            id="com.documentum.devprog.eclipsePlugin.viewExtension.traceView"
-            name="Trace View"/>
-      <view
-            allowMultiple="false"
-            category="com.documentum.devprog.eclipse.repoint"
-            class="com.documentum.devprog.eclipse.traceview.TraceEntryView"
-            icon="icons/logo_16.gif"
-            id="com.documentum.devprog.eclipsePlugin.viewExtension.traceEntryView"
-            name="Trace Entry View"/>
-      <view
-            allowMultiple="false"
-            category="com.documentum.devprog.eclipse.repoint"
-            class="com.documentum.devprog.eclipse.tree.DocbaseItemListView"
-            icon="icons/logo_16.gif"
-            id="com.documentum.devprog.eclipsePlugin.viewExtension.docbaseItemListView"
-            name="Docbase Item List View"/>
-      <view
-            allowMultiple="false"
-            category="com.documentum.devprog.eclipse.repoint"
-            class="com.documentum.devprog.eclipse.types.QuickTypeHierarchyView"
-            icon="icons/logo_16.gif"
-            id="com.documentum.devprog.eclipsePlugin.viewExtension.quickTypeHierarchyView"
-            name="Quick Type Hierarchy"/>
-   	</extension>
-   	
-	<extension 
-			id="com.documentum.devprog.eclipsePlugin.perspectivesExtension"
-			name="Devprog Perspective Extension"
-			point="org.eclipse.ui.perspectives">
-			
-			<perspective 
-					name="Documentum Perspective"
-					id="com.documentum.devprog.eclipsePlugin.perspectivesExtension.dmPerspective"
-					icon="icons/logo_16.gif"
-					class="com.documentum.devprog.eclipse.perspective.DevprogPerspective"				
-			>			
-			</perspective>
-	</extension>
- <extension
-       id="RepointProduct"
-       point="org.eclipse.core.runtime.products">
-    <product
-          application="com.documentum.devprog.eclipsePlugin.RepointApp"
-          name="EMC Documentum Repository Interrogation Utility (Repoint)">
-       <property
-             name="aboutText"
-             value="Repository Interrogation Utility&#x0A;EMC Developer Network 2006"/>
-       <property
-             name="aboutImage"
-             value="icons/emc_yellowbk_48.gif"/>
-       <property
-             name="windowImages"
-             value="icons/logo_16.gif"/>
-       <property
-             name="appName"
-             value="EMC Documentum Repository Interrogation Utility (Repoint)">
-       </property>
-    </product>
- </extension>
-	
-	
- 
-    
-    
 
-	
+    <extension-point id="repoTreeAction" name="Repo Navigation Tree Menu" schema="schema/repoTreeAction.exsd"/>
+    <extension-point id="typeTreeAction" name="Repo Type Tree Extension" schema="schema/typeTreeExtension.exsd"/>
+    <extension-point id="propViewAction" name="Properties View Extension" schema="schema/propViewExtension.exsd"/>
 
-	<extension id="RepointApp" point="org.eclipse.core.runtime.applications">
-   		<application>
-   			<run class="com.documentum.devprog.eclipse.rcpapp.RCPApp">
-   			</run>
-   		</application>
-   </extension>
-  
-  <extension
-        point="org.eclipse.ui.preferencePages">
-     <page
-           class="com.documentum.devprog.eclipse.traceview.TracePreferencePage"
-           id="com.documentum.devprog.eclipse.traceview.preferences.TracePreferencePage"
-           name="DFC Trace View"/>
-     <page
-           class="com.documentum.devprog.eclipse.tree.RepoBrowserPreferencePage"
-           id="com.documentum.devprog.eclipse.docbaseItemListView.preferences.preferencePage"
-           name="Repo Browser Preferences"/>
-  </extension>
-  <extension
-        point="org.eclipse.core.runtime.preferences">
-     <initializer class="com.documentum.devprog.eclipse.common.PreferenceInitializer"/>
-  </extension>
+    <extension
+            id="com.documentum.devprog.eclipsePlugin.viewExtension"
+            name="Devprog Workspace Extenstion"
+            point="org.eclipse.ui.views">
+
+        <category name="EMC Repoint" id="com.documentum.devprog.eclipse.repoint"/>
+
+        <view
+                name="Repository Browser"
+                icon="icons/logo_16.gif"
+                category="com.documentum.devprog.eclipse.repoint"
+                class="com.documentum.devprog.eclipse.tree.DocbaseTreeView"
+                id="com.documentum.devprog.eclipsePlugin.viewExtension.treeView"
+
+        />
+
+        <view
+                name="Repository Object Properties Dump"
+                icon="icons/logo_16.gif"
+                category="com.documentum.devprog.eclipse.repoint"
+                class="com.documentum.devprog.eclipse.properties.PropertiesView"
+                id="com.documentum.devprog.eclipsePlugin.viewExtension.propertiesView"
+
+        />
+
+        <view
+                name="Type Tree"
+                icon="icons/logo_16.gif"
+                category="com.documentum.devprog.eclipse.repoint"
+                class="com.documentum.devprog.eclipse.types.TypeView"
+                id="com.documentum.devprog.eclipsePlugin.viewExtension.typeTreeView"
+
+        />
+
+        <view
+                name="Query View"
+                icon="icons/logo_16.gif"
+                category="com.documentum.devprog.eclipse.repoint"
+                class="com.documentum.devprog.eclipse.query.QueryView"
+                id="com.documentum.devprog.eclipsePlugin.viewExtension.queryView"
+
+        />
+
+        <view
+                name="API View"
+                icon="icons/logo_16.gif"
+                category="com.documentum.devprog.eclipse.repoint"
+                class="com.documentum.devprog.eclipse.api.ApiView"
+                id="com.documentum.devprog.eclipsePlugin.viewExtension.apiView"
+
+        />
+
+        <view
+                name="Progress View"
+                icon="icons/pview.gif"
+                category="org.eclipse.ui"
+                class="org.eclipse.ui.ExtensionFactory:progressView"
+                id="org.eclipse.ui.views.ProgressView">
+        </view>
+
+        <view
+                name="SBO View"
+                icon="icons/logo_16.gif"
+                category="com.documentum.devprog.eclipse.repoint"
+                class="com.documentum.devprog.eclipse.bof.BOFView"
+                id="com.documentum.devprog.eclipsePlugin.viewExtension.bofView"
+
+        >
+        </view>
+        <view
+                allowMultiple="false"
+                category="com.documentum.devprog.eclipse.repoint"
+                class="com.documentum.devprog.eclipse.traceview.TraceView"
+                icon="icons/logo_16.gif"
+                id="com.documentum.devprog.eclipsePlugin.viewExtension.traceView"
+                name="Trace View"/>
+        <view
+                allowMultiple="false"
+                category="com.documentum.devprog.eclipse.repoint"
+                class="com.documentum.devprog.eclipse.traceview.TraceEntryView"
+                icon="icons/logo_16.gif"
+                id="com.documentum.devprog.eclipsePlugin.viewExtension.traceEntryView"
+                name="Trace Entry View"/>
+        <view
+                allowMultiple="false"
+                category="com.documentum.devprog.eclipse.repoint"
+                class="com.documentum.devprog.eclipse.tree.DocbaseItemListView"
+                icon="icons/logo_16.gif"
+                id="com.documentum.devprog.eclipsePlugin.viewExtension.docbaseItemListView"
+                name="Docbase Item List View"/>
+        <view
+                allowMultiple="false"
+                category="com.documentum.devprog.eclipse.repoint"
+                class="com.documentum.devprog.eclipse.types.QuickTypeHierarchyView"
+                icon="icons/logo_16.gif"
+                id="com.documentum.devprog.eclipsePlugin.viewExtension.quickTypeHierarchyView"
+                name="Quick Type Hierarchy"/>
+    </extension>
+
+    <extension
+            id="com.documentum.devprog.eclipsePlugin.perspectivesExtension"
+            name="Devprog Perspective Extension"
+            point="org.eclipse.ui.perspectives">
+
+        <perspective
+                name="Documentum Perspective"
+                id="com.documentum.devprog.eclipsePlugin.perspectivesExtension.dmPerspective"
+                icon="icons/logo_16.gif"
+                class="com.documentum.devprog.eclipse.perspective.DevprogPerspective"
+        >
+        </perspective>
+    </extension>
+    <extension
+            id="RepointProduct"
+            point="org.eclipse.core.runtime.products">
+        <product
+                application="com.documentum.devprog.eclipsePlugin.RepointApp"
+                name="EMC Documentum Repository Interrogation Utility (Repoint)">
+            <property
+                    name="aboutText"
+                    value="Repository Interrogation Utility&#x0A;EMC Developer Network 2006"/>
+            <property
+                    name="aboutImage"
+                    value="icons/emc_yellowbk_48.gif"/>
+            <property
+                    name="windowImages"
+                    value="icons/logo_16.gif"/>
+            <property
+                    name="appName"
+                    value="EMC Documentum Repository Interrogation Utility (Repoint)">
+            </property>
+        </product>
+    </extension>
+
+
+    <extension
+            id="libraryFunctions"
+            name="Repository Library Functions"
+            point="com.documentum.devprog.eclipsePlugin.repoTreeAction">
+
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.ViewAction" label="View"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.ExportAction" label="Export"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.CheckoutAction" label="Checkout"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.CheckinAction" label="Checkin"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.CancelCheckoutAction" label="Cancel Checkout"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.DeleteDocumentAction" label="Delete"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.ConnectionConfigAction"
+                    label="Connection Config"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.DocbaseConfigAction" label="Repository Config"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.ServerConfigAction" label="Server Config"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.ClientConfigAction" label="Client Config"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.ServerMapAction" label="Server Map"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.DocbrokerMapAction"
+                    label="Connection Broker Map"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.NewFolderAction" label="New Folder/Cabinet"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.ImportDocumentAction" label="Import Document"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.deepexport.DeepExportAction"
+                    label="Deep Export Folder"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.XSLTransformRepoObjAction"
+                    label="XSL Transform Repository File"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.XSLTransformFileAction"
+                    label="XSL Transform Local File"/>
+    </extension>
+
+
+    <extension id="RepointApp" point="org.eclipse.core.runtime.applications">
+        <application>
+            <run class="com.documentum.devprog.eclipse.rcpapp.RCPApp">
+            </run>
+        </application>
+    </extension>
+
+    <extension
+            point="org.eclipse.ui.preferencePages">
+        <page
+                class="com.documentum.devprog.eclipse.traceview.TracePreferencePage"
+                id="com.documentum.devprog.eclipse.traceview.preferences.TracePreferencePage"
+                name="DFC Trace View"/>
+        <page
+                class="com.documentum.devprog.eclipse.tree.RepoBrowserPreferencePage"
+                id="com.documentum.devprog.eclipse.docbaseItemListView.preferences.preferencePage"
+                name="Repo Browser Preferences"/>
+    </extension>
+    <extension
+            point="org.eclipse.core.runtime.preferences">
+        <initializer class="com.documentum.devprog.eclipse.common.PreferenceInitializer"/>
+    </extension>
 
 </plugin>

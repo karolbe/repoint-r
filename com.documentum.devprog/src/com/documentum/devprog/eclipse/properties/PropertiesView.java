@@ -26,8 +26,8 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  * 
-  *******************************************************************************/
+ ï¿½*ï¿½
+ ï¿½*******************************************************************************/
 
 /*
  * Created on May 4, 2004
@@ -37,53 +37,17 @@
  */
 package com.documentum.devprog.eclipse.properties;
 
+import com.documentum.devprog.common.UtilityMethods;
+import com.documentum.devprog.eclipse.DevprogPlugin;
+import com.documentum.devprog.eclipse.common.*;
+import com.documentum.devprog.eclipse.types.TypeView;
+import com.documentum.fc.client.*;
 import com.documentum.fc.common.DfId;
 import com.documentum.fc.common.DfLogger;
 import com.documentum.fc.common.IDfAttr;
 import com.documentum.fc.common.IDfId;
-
-import com.documentum.fc.client.DfClient;
-import com.documentum.fc.client.IDfPersistentObject;
-import com.documentum.fc.client.IDfSession;
-import com.documentum.fc.client.IDfSysObject;
-import com.documentum.fc.client.IDfType;
-
-import com.documentum.devprog.common.UtilityMethods;
-import com.documentum.devprog.eclipse.DevprogPlugin;
-import com.documentum.devprog.eclipse.common.CommonConstants;
-import com.documentum.devprog.eclipse.common.DocbaseLoginDialog;
-import com.documentum.devprog.eclipse.common.PluginHelper;
-import com.documentum.devprog.eclipse.common.PluginState;
-import com.documentum.devprog.eclipse.common.SimpleListDialog;
-import com.documentum.devprog.eclipse.query.QueryView;
-import com.documentum.devprog.eclipse.types.TypeView;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.text.Collator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IStatusLineManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TableViewer;
@@ -98,20 +62,16 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.layout.*;
+import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.part.ViewPart;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.text.Collator;
+import java.util.*;
+import java.util.List;
 
 /**
  * 
@@ -469,7 +429,7 @@ public class PropertiesView extends ViewPart {
 	/**
 	 * Displays the properties for the object id specified using
 	 * 
-	 * @param parent
+	 * @param objId
 	 */
 
 	protected void addToBox(String objId) {
