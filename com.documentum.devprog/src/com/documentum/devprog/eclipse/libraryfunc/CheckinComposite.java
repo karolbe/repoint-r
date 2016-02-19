@@ -51,8 +51,6 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.ui.progress.IProgressConstants;
 
-import java.io.File;
-
 public class CheckinComposite extends Composite {
 
 	private Label lblObjectName = null;
@@ -187,11 +185,8 @@ public class CheckinComposite extends Composite {
                         if (file != null) {
                             try {
                                 txtFile.setText(file);
-                                File fl = new File(file);
-                                txtFile.setText(fl.getName());
                             } catch (Exception dfei) {
                             }
-
                         }
                     }
                 });
