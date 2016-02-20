@@ -5,6 +5,7 @@
  */
 package com.documentum.devprog.eclipse.properties;
 
+import com.documentum.devprog.eclipse.model.AttrInfo;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;

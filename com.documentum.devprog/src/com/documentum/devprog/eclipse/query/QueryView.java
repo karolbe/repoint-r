@@ -26,8 +26,8 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  * 
-  *******************************************************************************/
+ ï¿½*ï¿½
+ ï¿½*******************************************************************************/
 
 /*
  * Created on Jul 20, 2004
@@ -36,47 +36,23 @@
  */
 package com.documentum.devprog.eclipse.query;
 
-import com.documentum.fc.common.DfId;
-import com.documentum.fc.common.DfLogger;
-import com.documentum.fc.common.IDfId;
-
+import com.documentum.devprog.common.UtilityMethods;
+import com.documentum.devprog.eclipse.DevprogPlugin;
+import com.documentum.devprog.eclipse.common.*;
+import com.documentum.devprog.eclipse.libraryfunc.ACLDialog;
 import com.documentum.fc.client.IDfCollection;
 import com.documentum.fc.client.IDfQuery;
 import com.documentum.fc.client.IDfSession;
 import com.documentum.fc.client.IDfSysObject;
-
-import com.documentum.devprog.common.UtilityMethods;
-import com.documentum.devprog.eclipse.DevprogPlugin;
-import com.documentum.devprog.eclipse.common.CommonConstants;
-import com.documentum.devprog.eclipse.common.DocbaseListDialog;
-import com.documentum.devprog.eclipse.common.DocbaseLoginDialog;
-import com.documentum.devprog.eclipse.common.MRUItem;
-import com.documentum.devprog.eclipse.common.MRUQueue;
-import com.documentum.devprog.eclipse.common.PluginHelper;
-import com.documentum.devprog.eclipse.common.PluginState;
-import com.documentum.devprog.eclipse.common.SimpleListDialog;
-
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
+import com.documentum.fc.common.DfException;
+import com.documentum.fc.common.DfId;
+import com.documentum.fc.common.DfLogger;
+import com.documentum.fc.common.IDfId;
+import com.documentum.xml.xdql.DfXmlQuery;
+import com.documentum.xml.xdql.IDfXmlQuery;
 import org.eclipse.core.runtime.Preferences;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -85,69 +61,22 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
-import org.eclipse.swt.custom.ExtendedModifyEvent;
-import org.eclipse.swt.custom.ExtendedModifyListener;
-import org.eclipse.swt.custom.PopupList;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.custom.ScrolledComposite;
-import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.custom.StyleRange;
-import org.eclipse.swt.custom.StyledText;
-import org.eclipse.swt.custom.TableCursor;
-import org.eclipse.swt.custom.VerifyKeyListener;
+import org.eclipse.swt.custom.*;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.events.ExpandEvent;
-import org.eclipse.swt.events.ExpandListener;
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
-import org.eclipse.swt.events.VerifyEvent;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.GC;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.ExpandBar;
-import org.eclipse.swt.widgets.ExpandItem;
-import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.Link;
-import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.ui.IMemento;
-import org.eclipse.ui.IViewSite;
-import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.PartInitException;
-import org.eclipse.ui.PlatformUI;
+import org.eclipse.swt.events.*;
+import org.eclipse.swt.graphics.*;
+import org.eclipse.swt.layout.*;
+import org.eclipse.swt.widgets.*;
+import org.eclipse.ui.*;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.progress.IProgressConstants;
 import org.eclipse.ui.progress.IProgressService;
 
-import com.documentum.xml.xdql.DfXmlQuery;
-import com.documentum.xml.xdql.IDfXmlQuery;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.*;
 
 /**
  * 
@@ -255,6 +184,8 @@ public class QueryView extends ViewPart {
 	Action selectRepo = null;
 
 	Action addToFavorites = null;
+
+	Action showACL = null;
 
 	private String queryDocbase = null;
 
@@ -469,6 +400,7 @@ public class QueryView extends ViewPart {
 		menuMgr.add(copyAction);
 		menuMgr.add(dumpProperties);
 		menuMgr.add(showPaths);
+		menuMgr.add(showACL);
 		menuMgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 
 		menuMgr.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS
@@ -492,6 +424,14 @@ public class QueryView extends ViewPart {
 		{
 			public void run() {
 				dumpProperties(getSelectedData());
+			}
+		};
+
+		showACL = new Action(
+				Messages.getString("QueryView.ACT_SHOW_ACL")) //$NON-NLS-1$
+		{
+			public void run() {
+				showACL(getSelectedData());
 			}
 		};
 
@@ -1739,6 +1679,22 @@ public class QueryView extends ViewPart {
 			PluginHelper.showPropertiesView(data);
 		}
 
+	}
+
+	protected void showACL(String data) {
+		String[] arrs = data.split(",");
+		int arrLen = arrs.length;
+		if ((arrLen > 0) && (new DfId(arrs[0])).isObjectId()) {
+			IDfSession sess = PluginState.getSessionById(arrs[0]);
+			IDfSysObject sobj;
+			try {
+				sobj = (IDfSysObject) sess.getObject(new DfId(arrs[0]));
+				ACLDialog sld = new ACLDialog(getSite().getShell(), sobj.getACL());
+				sld.open();
+			} catch (DfException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void init(IViewSite site, IMemento memento) throws PartInitException {

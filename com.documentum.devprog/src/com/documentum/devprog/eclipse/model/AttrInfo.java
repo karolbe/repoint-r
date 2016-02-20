@@ -26,15 +26,15 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
- *******************************************************************************/
+ï¿½*ï¿½
+ï¿½*******************************************************************************/
 
 /*
  * Created on Jul 19, 2004
  *
  * Documentum Developer Program 2004
  */
-package com.documentum.devprog.eclipse.properties;
+package com.documentum.devprog.eclipse.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -106,37 +106,37 @@ public class AttrInfo {
 		return isObject;
 	}
 
-	void setCustom(boolean custom) {
+	public void setCustom(boolean custom) {
 		this.custom = custom;
 	}
 
-	void setDataType(String dataType) {
+	public void setDataType(String dataType) {
 		this.dataType = dataType;
 	}
 
-	void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	void setRepeating(boolean single) {
+	public void setRepeating(boolean single) {
 		this.repeating = single;
 	}
 
-	void setValue(String value) {
+	public void setValue(String value) {
 		this.value = value;
 		repVals.clear();
 		repVals.add(value);
 	}
 
-	void addValue(String value) {
+	public void addValue(String value) {
 		repVals.add(value);
 	}
 
-	String[] getValues() {
+	public String[] getValues() {
 		return (String[]) repVals.toArray(new String[] {});
 	}
 
-	void setValues(String[] vals) {
+	public void setValues(String[] vals) {
 		repVals.clear();
 		repVals.addAll(Arrays.asList(vals));
 	}

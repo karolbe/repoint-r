@@ -6,18 +6,10 @@
 package com.documentum.devprog.eclipse.properties;
 
 import com.documentum.devprog.eclipse.common.PluginHelper;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
+import com.documentum.devprog.eclipse.model.AttrInfo;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
-import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -25,11 +17,10 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * 

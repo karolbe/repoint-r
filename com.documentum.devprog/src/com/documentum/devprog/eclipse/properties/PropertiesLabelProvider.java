@@ -26,8 +26,8 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
- *******************************************************************************/
+ï¿½*ï¿½
+ï¿½*******************************************************************************/
 
 /*
  * Created on Jul 19, 2004
@@ -36,6 +36,7 @@
  */
 package com.documentum.devprog.eclipse.properties;
 
+import com.documentum.devprog.eclipse.model.AttrInfo;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;

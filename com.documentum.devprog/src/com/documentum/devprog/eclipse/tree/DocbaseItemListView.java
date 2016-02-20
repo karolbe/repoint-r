@@ -5,33 +5,14 @@
  */
 package com.documentum.devprog.eclipse.tree;
 
-import com.documentum.fc.common.DfLogger;
-
 import com.documentum.devprog.eclipse.DevprogPlugin;
 import com.documentum.devprog.eclipse.common.PluginHelper;
 import com.documentum.devprog.eclipse.common.PluginState;
 import com.documentum.devprog.eclipse.common.PreferenceConstants;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
+import com.documentum.fc.common.DfLogger;
+import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.Preferences.IPropertyChangeListener;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.action.*;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
@@ -53,6 +34,8 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
+
+import java.util.*;
 
 /**
  * 
@@ -416,7 +399,6 @@ public class DocbaseItemListView extends ViewPart implements
 					RepoTreeExtension obj = (RepoTreeExtension) ce[j]
 							.createExecutableExtension("class");
 					String label = ce[j].getAttribute("label");
-					System.out.println("Got extension: " + label);
 					obj.setText(label);
 					// Commenting these out as there is no guaratee that the
 					// widgets are created when the calls below are made.

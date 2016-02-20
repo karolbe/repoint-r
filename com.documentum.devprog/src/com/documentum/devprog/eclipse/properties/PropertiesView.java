@@ -40,6 +40,7 @@ package com.documentum.devprog.eclipse.properties;
 import com.documentum.devprog.common.UtilityMethods;
 import com.documentum.devprog.eclipse.DevprogPlugin;
 import com.documentum.devprog.eclipse.common.*;
+import com.documentum.devprog.eclipse.model.AttrInfo;
 import com.documentum.devprog.eclipse.types.TypeView;
 import com.documentum.fc.client.*;
 import com.documentum.fc.common.DfId;

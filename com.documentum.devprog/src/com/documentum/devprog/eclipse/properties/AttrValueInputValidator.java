@@ -5,6 +5,7 @@
  */
 package com.documentum.devprog.eclipse.properties;
 
+import com.documentum.devprog.eclipse.model.AttrInfo;
 import org.eclipse.jface.dialogs.IInputValidator;
 
 /**
@@ -17,7 +18,7 @@ public class AttrValueInputValidator implements IInputValidator {
 
 	private AttrInfo attr;
 
-	AttrValueInputValidator(AttrInfo attr) {
+	public AttrValueInputValidator(AttrInfo attr) {
 		this.attr = attr;
 	}
 

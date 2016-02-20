@@ -169,6 +169,8 @@
                     label="XSL Transform Repository File"/>
         <repoAction class="com.documentum.devprog.eclipse.libraryfunc.XSLTransformFileAction"
                     label="XSL Transform Local File"/>
+        <repoAction class="com.documentum.devprog.eclipse.libraryfunc.ACLAction"
+                    label="View ACL"/>
     </extension>
 
 
