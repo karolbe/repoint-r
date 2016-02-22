@@ -1,33 +1,33 @@
 /*******************************************************************************
- * Copyright (c) 2005-2006, EMC Corporation 
+ * Copyright (c) 2005-2006, EMC Corporation
  * All rights reserved.
 
- * Redistribution and use in source and binary forms, 
- * with or without modification, are permitted provided that 
+ * Redistribution and use in source and binary forms,
+ * with or without modification, are permitted provided that
  * the following conditions are met:
  *
- * - Redistributions of source code must retain the above copyright 
+ * - Redistributions of source code must retain the above copyright
  *   notice, this list of conditions and the following disclaimer.
  * - Redistributions in binary form must reproduce the above copyright
  *   notice, this list of conditions and the following disclaimer in the
  *   documentation and/or other materials provided with the distribution.
- * - Neither the name of the EMC Corporation nor the names of its 
+ * - Neither the name of the EMC Corporation nor the names of its
  *   contributors may be used to endorse or promote products derived from
  *   this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS 
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT 
- * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR 
- * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
  * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
- * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT 
- * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, 
- * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY 
- * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  * 
-  *******************************************************************************/
+ ï¿½*ï¿½
+ ï¿½*******************************************************************************/
 
 /*
  * Created on Mar 11, 2005
@@ -108,9 +108,9 @@ import com.documentum.com.IDfClientX;
 import com.documentum.operations.IDfOperationError;
 
 /**
- * 
- * 
- * 
+ *
+ *
+ *
  * @author Aashish Patil(patil_aashish@emc.com)
  */
 public class PluginHelper {
@@ -123,8 +123,10 @@ public class PluginHelper {
 	private static DFCVersionParser dfcVersion = new DFCVersionParser(
 			DfClient.getDFCVersion());
 
-	public static List getSortedDocbaseList() throws DfException {
-		ArrayList dbLst = new ArrayList();
+	public static List<String> getSortedDocbaseList() throws DfException {
+		return PluginState.getDocbases();
+/*
+		ArrayList<String> dbLst = new ArrayList<String>();
 
 		IDfClient localClient = DfClient.getLocalClient();
 		IDfDocbaseMap dmap = localClient.getDocbaseMap();
@@ -135,6 +137,7 @@ public class PluginHelper {
 		Collections.sort(dbLst);
 
 		return dbLst;
+*/
 	}
 
 	public static void showPropertiesView(String objectId) {
@@ -219,7 +222,7 @@ public class PluginHelper {
 
 	/**
 	 * Gets the URL to a file within the plugin folder.
-	 * 
+	 *
 	 * @param relPath
 	 *            path should not start with a '/'
 	 * @return
@@ -232,7 +235,7 @@ public class PluginHelper {
 	/**
 	 * Gets the URL to a file within the plugin folder, within a specified
 	 * plugin
-	 * 
+	 *
 	 * @param pluginId
 	 *            The plugin relative to which the path is specified.
 	 * @param relPath
@@ -246,7 +249,7 @@ public class PluginHelper {
 
 	/**
 	 * Serializes the specified element to a String object.
-	 * 
+	 *
 	 * @param node
 	 * @return
 	 * @throws ConfigException
@@ -284,7 +287,7 @@ public class PluginHelper {
 	 * It returns all the docbase types have a specified docbase type as their
 	 * supertype. To put it another way, it returns all the subtypes of a
 	 * particular type.
-	 * 
+	 *
 	 * @param sess
 	 *            The docbase session to use
 	 * @param superType
@@ -327,7 +330,7 @@ public class PluginHelper {
 	/**
 	 * Gets all the subtypes of dm_folder or the superType mentioned. The third
 	 * flag tells whether to include dm_cabinet and its subtypes or not.
-	 * 
+	 *
 	 * @param sess
 	 * @param superType
 	 *            dm_folder or a subtype of dm_folder. If null dm_folder is
@@ -390,7 +393,7 @@ public class PluginHelper {
 	/**
 	 * Gets an array of all the format names defined in a repo. The array
 	 * contains the value of the 'name' attribute of dm_format
-	 * 
+	 *
 	 * @param sess
 	 *            repoSession
 	 * @return list of formats.
@@ -419,7 +422,7 @@ public class PluginHelper {
 
 	/**
 	 * Gets an image from the image registry
-	 * 
+	 *
 	 * @param path
 	 * @return
 	 */
@@ -443,7 +446,7 @@ public class PluginHelper {
 
 	/**
 	 * Gets an image from the image registry
-	 * 
+	 *
 	 * @param path
 	 * @return
 	 */
@@ -483,7 +486,7 @@ public class PluginHelper {
 	/**
 	 * Gets the image descriptor for the specified path. Path is relative to the
 	 * icons folder. It should not start with a front slash.
-	 * 
+	 *
 	 * @param path
 	 * @return
 	 */
@@ -505,7 +508,7 @@ public class PluginHelper {
 
 	/**
 	 * Gets the list of type names for a repo.
-	 * 
+	 *
 	 * @param repoName
 	 * @return
 	 */
@@ -540,7 +543,7 @@ public class PluginHelper {
 
 	/**
 	 * Gets ALL the attributes in a repo.
-	 * 
+	 *
 	 * @param repo
 	 * @return
 	 */
@@ -571,7 +574,7 @@ public class PluginHelper {
 
 	/**
 	 * Gets the path of allfolders that contain the given object
-	 * 
+	 *
 	 * @param sObj
 	 * @return
 	 * @throws Exception
@@ -595,7 +598,7 @@ public class PluginHelper {
 
 	/**
 	 * Gets a string representation of a stack trace.
-	 * 
+	 *
 	 * @param th
 	 * @return
 	 */
@@ -610,7 +613,7 @@ public class PluginHelper {
 
 	/**
 	 * Checks if the DFC version is 5.3 or later.
-	 * 
+	 *
 	 * @return
 	 */
 	public static boolean isDFC53() {
@@ -619,7 +622,7 @@ public class PluginHelper {
 
 	/**
 	 * Gets a new FormData instance for the specified dimensions
-	 * 
+	 *
 	 * @param top
 	 * @param bottom
 	 * @param left
@@ -638,12 +641,12 @@ public class PluginHelper {
 	/**
 	 * Prints the errors generated by IDfOperation. Errors are generated if
 	 * IDfOperation.execute() returns false;
-	 * 
+	 *
 	 * @param out
 	 *            The output stream to which the error messages are printed.
 	 * @param errorList
 	 *            The error list geenrated by the operation.
-	 * 
+	 *
 	 */
 	public static void printOperationErrors(OutputStream out, IDfList errorList) {
 
@@ -666,7 +669,7 @@ public class PluginHelper {
 
 	/**
 	 * Converts the error list to a string so that it can be easily printed out.
-	 * 
+	 *
 	 * @param errList
 	 * @return
 	 */
@@ -689,9 +692,9 @@ public class PluginHelper {
 
 	/**
 	 * Converts a type part to the corresponding type name.
-	 * 
+	 *
 	 * NOTE: This method does not cover all types.
-	 * 
+	 *
 	 * @param objectId
 	 * @return
 	 * @throws DfException
@@ -731,7 +734,7 @@ public class PluginHelper {
 	 * Converts a persistent object to a typed object. This is needed because a
 	 * persistent object is bound to a session while a typed object returned
 	 * from a query is a cached object and hence it is safe to use it.
-	 * 
+	 *
 	 * @param sess
 	 * @param attrList
 	 * @param pObj
@@ -769,7 +772,7 @@ public class PluginHelper {
 	/**
 	 * Checks if the specified property has been configured in the
 	 * dfc.properties file.
-	 * 
+	 *
 	 * @param property
 	 * @return
 	 */
@@ -858,7 +861,7 @@ public class PluginHelper {
 
 	/**
 	 * Gets the TreeViewer being used by the RepoTree
-	 * 
+	 *
 	 * @return
 	 */
 	public static TreeViewer getRepoTreeViewer() {
@@ -872,7 +875,7 @@ public class PluginHelper {
 
 	/**
 	 * Gets the TreeViewer being used by the RepoTree
-	 * 
+	 *
 	 * @return
 	 */
 	public static DocbaseTreeView getRepoTree() {
@@ -886,7 +889,7 @@ public class PluginHelper {
 
 	/**
 	 * Gets the structured viewer used for displaying object list
-	 * 
+	 *
 	 * @return
 	 */
 	public static TableViewer getObjectListViewer() {
@@ -899,7 +902,7 @@ public class PluginHelper {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public static DocbaseItemListView getObjectListView() {
@@ -909,5 +912,26 @@ public class PluginHelper {
 		DocbaseItemListView di = (DocbaseItemListView) actPage
 				.findView(DevprogPlugin.DOCBASE_ITEM_LIST_VIEW_ID);
 		return di;
+	}
+
+	public static List<String> getDocbrokerDocbases(String docbroker) {
+		List<String> dbList = new ArrayList<String>();
+		try {
+    		IDfClient localClient;
+			localClient = DfClient.getLocalClient();
+            IDfTypedObject config = localClient.getClientConfig();
+            config.setString("primary_host", docbroker);
+            config.setInt("primary_port", 1489);
+
+            IDfDocbaseMap dmap = localClient.getDocbaseMap();
+            for (int i = 0; i < dmap.getDocbaseCount(); i++) {
+                String name = dmap.getDocbaseName(i);
+                dbList.add(name);
+            }
+            Collections.sort(dbList);
+		} catch (DfException e) {
+			e.printStackTrace();
+		}
+		return dbList;
 	}
 }

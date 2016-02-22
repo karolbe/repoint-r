@@ -26,8 +26,8 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
- *******************************************************************************/
+ï¿½*ï¿½
+ï¿½*******************************************************************************/
 
 /*
  * Created on Jun 27, 2005
@@ -38,23 +38,16 @@ package com.documentum.devprog.eclipse.common;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.DoubleClickEvent;
-import org.eclipse.jface.viewers.IDoubleClickListener;
-import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ListViewer;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
@@ -69,23 +62,40 @@ public class DocbaseListDialog extends Dialog {
 	ListViewer repoListViewer = null;
 
 	String selectedRepo = null;
+	private int width = 400;
+	private int height = 300;
 
 	public DocbaseListDialog(Shell sh) {
 		super(sh);
 	}
 
 	protected Control createDialogArea(Composite parent) {
-		Composite rootContr = new Composite(parent, SWT.NONE);
-		rootContr.setLayout(new FillLayout());
+		Composite composite = new Composite(parent, SWT.NONE);
 		GridData gd = new GridData();
-		gd.heightHint = 300;
-		gd.widthHint = 400;
-		rootContr.setLayoutData(gd);
+		gd.widthHint = this.width;
+		gd.heightHint = this.height;
+		composite.setLayoutData(gd);
 
-		repoListViewer = new ListViewer(rootContr, SWT.V_SCROLL | SWT.SINGLE);
+		composite.setLayout(new FormLayout());
+
+		repoListViewer = new ListViewer(composite, SWT.V_SCROLL | SWT.SINGLE);
 		repoListViewer.setContentProvider(new DocbaseListContentProvider());
 		repoListViewer.setLabelProvider(new DocbaseListLabelProvider());
 		repoListViewer.setSorter(new ViewerSorter());
+		repoListViewer.getList().setLayoutData(PluginHelper.getFormData(0, 40, 0, 100));
+
+		Button addExternalDocbase = new Button(composite, SWT.NONE);
+		addExternalDocbase.setText("Add External Docbase");
+		addExternalDocbase.setLayoutData(PluginHelper.getFormData(80, 95, 50, 100));
+		addExternalDocbase.addSelectionListener(new SelectionListener() {
+			public void widgetSelected(SelectionEvent selectionEvent) {
+				showExternalDocbaseDialog();
+			}
+
+			public void widgetDefaultSelected(SelectionEvent selectionEvent) {
+
+			}
+		});
 
 		Font oldFont = repoListViewer.getList().getFont();
 		FontData fdata[] = oldFont.getFontData();
@@ -121,6 +131,13 @@ public class DocbaseListDialog extends Dialog {
 
 		});
 		return parent;
+	}
+
+	private void showExternalDocbaseDialog() {
+		ExternalDocbaseDialog docbrokerDlg = new ExternalDocbaseDialog(
+				getShell());
+		docbrokerDlg.open();
+		repoListViewer.add(docbrokerDlg.getDocbase());
 	}
 
 	protected void configureShell(Shell newShell) {

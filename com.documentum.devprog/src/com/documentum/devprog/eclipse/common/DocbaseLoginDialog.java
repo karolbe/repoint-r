@@ -26,8 +26,8 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
- *******************************************************************************/
+ï¿½*ï¿½
+ï¿½*******************************************************************************/
 
 /*
  * Created on Jul 16, 2004
@@ -36,26 +36,18 @@
  */
 package com.documentum.devprog.eclipse.common;
 
-import com.documentum.fc.common.DfException;
-import com.documentum.fc.common.DfLogger;
-
 import com.documentum.fc.client.DfClient;
 import com.documentum.fc.client.IDfClient;
 import com.documentum.fc.client.IDfDocbaseMap;
-
-import java.util.ArrayList;
-import java.util.Collections;
-
+import com.documentum.fc.common.DfLogger;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Generic docbase login dialog.
@@ -87,7 +79,7 @@ public class DocbaseLoginDialog extends org.eclipse.jface.dialogs.Dialog {
 	/**
 	 * Sets the name of the docbase for which login is required.
 	 * 
-	 * @param docbaseInfo
+	 * @param docbaseName
 	 */
 	public void setDocbaseName(String docbaseName) {
 		if ((docbaseName != null) && (docbaseName.length() > 0)) {

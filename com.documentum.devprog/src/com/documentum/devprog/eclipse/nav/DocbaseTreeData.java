@@ -26,8 +26,8 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
- *******************************************************************************/
+ï¿½*ï¿½
+ï¿½*******************************************************************************/
 
 /*
  * Created on Jul 16, 2004
@@ -36,30 +36,16 @@
  */
 package com.documentum.devprog.eclipse.nav;
 
-import com.documentum.fc.common.DfException;
-import com.documentum.fc.common.DfLogger;
-import com.documentum.fc.common.IDfBasicAttributes;
-import com.documentum.fc.common.IDfId;
-
-import com.documentum.fc.client.DfQuery;
-import com.documentum.fc.client.IDfCollection;
-import com.documentum.fc.client.IDfQuery;
-import com.documentum.fc.client.IDfSession;
-import com.documentum.fc.client.IDfSysObject;
-import com.documentum.fc.client.IDfTypedObject;
-import com.documentum.fc.client.IDfVirtualDocument;
-import com.documentum.fc.client.IDfVirtualDocumentNode;
-
 import com.documentum.devprog.eclipse.common.CommonConstants;
 import com.documentum.devprog.eclipse.common.DocbaseLoginDialog;
 import com.documentum.devprog.eclipse.common.PluginHelper;
 import com.documentum.devprog.eclipse.common.PluginState;
 import com.documentum.devprog.eclipse.types.ITypeViewData;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-
+import com.documentum.fc.client.*;
+import com.documentum.fc.common.DfException;
+import com.documentum.fc.common.DfLogger;
+import com.documentum.fc.common.IDfBasicAttributes;
+import com.documentum.fc.common.IDfId;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -67,6 +53,10 @@ import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.IProgressService;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * 
@@ -228,7 +218,8 @@ public class DocbaseTreeData implements ITypeViewData {
 						}
 					}
 					return dispData.toString();
-
+				} catch(Exception e) {
+					e.printStackTrace();
 				} finally {
 					PluginState.releaseSession(sess);
 				}

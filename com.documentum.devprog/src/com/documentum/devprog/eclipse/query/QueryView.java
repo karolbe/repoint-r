@@ -1292,12 +1292,14 @@ public class QueryView extends ViewPart {
 
 		resultsSummary = new Text(sumParent, SWT.READ_ONLY | SWT.MULTI
 				| SWT.V_SCROLL | SWT.WRAP);
+/*
 		resultsSummary.setBackground(super.getSite().getShell().getDisplay()
 				.getSystemColor(SWT.COLOR_INFO_BACKGROUND));
+*/
 		resultsSummary.setText(Messages.getString("QueryView.RESULTS_SUMMARY")); //$NON-NLS-1$
 		FormData fd3 = new FormData();
 		fd3.top = new FormAttachment(0, 5);
-		fd3.bottom = new FormAttachment(100, -5);
+		fd3.bottom = new FormAttachment(50, -5);
 		fd3.left = new FormAttachment(0, 5);
 		fd3.right = new FormAttachment(90, -5);
 		resultsSummary.setLayoutData(fd3);
