@@ -3,6 +3,10 @@ Documentum Repoint "resurrected".
 
 NEWS
 
+*"Add External Docbroker" in the login window. In this way it is now possible to add a docbase from a different docbroker than defined in dfc.properties. It is also possible to add docbases even without dfc.properties. All without quitting and starting up repoint again.
+
+Older NEWS:
+
 * Project finally compiles and should work exactly the same as the last repoint version available from the original Author.
 * File selector was added to the Checkin window that allows selecting a file to check in.
 * Simple ACL viewer was added to the Docbrowser and to the DQL results view.
