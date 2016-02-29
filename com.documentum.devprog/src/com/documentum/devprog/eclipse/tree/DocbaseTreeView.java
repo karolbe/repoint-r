@@ -26,8 +26,8 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  * 
-  *******************************************************************************/
+ ï¿½*ï¿½
+ ï¿½*******************************************************************************/
 
 /*
  * Created on Feb 27, 2004
@@ -36,49 +36,13 @@
  */
 package com.documentum.devprog.eclipse.tree;
 
-import com.documentum.fc.common.DfLogger;
-
-import com.documentum.fc.client.DfClient;
-import com.documentum.fc.client.IDfSessionManager;
-
 import com.documentum.devprog.eclipse.DevprogPlugin;
-import com.documentum.devprog.eclipse.common.BlowfishJC;
-import com.documentum.devprog.eclipse.common.DocbaseListDialog;
-import com.documentum.devprog.eclipse.common.DocbaseLoginDialog;
-import com.documentum.devprog.eclipse.common.PluginHelper;
-import com.documentum.devprog.eclipse.common.PluginState;
-import com.documentum.devprog.eclipse.common.SimpleTextDialog;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.InetAddress;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.PropertyResourceBundle;
-import java.util.ResourceBundle;
-import java.util.Set;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtension;
-import org.eclipse.core.runtime.IExtensionPoint;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Preferences;
-import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
+import com.documentum.devprog.eclipse.common.*;
+import com.documentum.devprog.eclipse.model.DocbaseInfo;
+import com.documentum.fc.client.DfClient;
+import com.documentum.fc.common.DfLogger;
+import org.eclipse.core.runtime.*;
+import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -87,12 +51,7 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
-import org.eclipse.swt.dnd.DND;
-import org.eclipse.swt.dnd.DropTarget;
-import org.eclipse.swt.dnd.DropTargetAdapter;
-import org.eclipse.swt.dnd.DropTargetEvent;
-import org.eclipse.swt.dnd.TextTransfer;
-import org.eclipse.swt.dnd.Transfer;
+import org.eclipse.swt.dnd.*;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
@@ -102,6 +61,14 @@ import org.eclipse.ui.IViewSite;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.part.ViewPart;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.URLEncoder;
+import java.util.*;
 
 /**
  * 
@@ -783,15 +750,13 @@ public class DocbaseTreeView extends ViewPart {
 	public void init(IViewSite site, IMemento memento) throws PartInitException {
 		super.init(site, memento);
 		this.memento = memento;
-		restoreSessionManager(memento);
-
+		restoreSessionManagers(memento);
 	}
 
 	public void saveState(IMemento memento) {
 		super.saveState(memento);
 		saveDocbaseNames(memento);
-		saveSessionManager(memento);
-
+		saveSessionManagers(memento);
 	}
 
 	private void saveDocbaseNames(IMemento memento) {
@@ -829,49 +794,55 @@ public class DocbaseTreeView extends ViewPart {
 				PluginState.setDocbase(curRepo);
 			}
 		}
-
 	}
 
-	private void saveSessionManager(IMemento memento) {
+	private void saveSessionManagers(IMemento memento) {
 		try {
-			IDfSessionManager sm = PluginState.getSessionManager();
-			ByteArrayOutputStream bout = new ByteArrayOutputStream();
-			ObjectOutputStream objOut = new ObjectOutputStream(bout);
-			objOut.writeObject(sm);
+			Map<String, DocbaseInfo> a = PluginState.getSessionManagers();
 
-			byte[] bts = bout.toByteArray();
-			String hname = InetAddress.getLocalHost().getHostName();
-			byte[] encrData = BlowfishJC.encryptData(hname, bts);
-			String encStr = BlowfishJC.convertBytesToHex(encrData);
-			memento.putString("SESSION_MANAGER", encStr);
+			for(String docbaseName : a.keySet()) {
+				DocbaseInfo docbaseInfo = a.get(docbaseName);
+				docbaseInfo.prepareForSave();
+				ByteArrayOutputStream bout = new ByteArrayOutputStream();
+				ObjectOutputStream objOut = new ObjectOutputStream(bout);
+				objOut.writeObject(docbaseInfo);
+
+				byte[] bts = bout.toByteArray();
+				String hname = InetAddress.getLocalHost().getHostName();
+				byte[] encrData = BlowfishJC.encryptData(hname, bts);
+				String encStr = BlowfishJC.convertBytesToHex(encrData);
+				memento.putString("SESSION_MANAGER_" + docbaseName, encStr);
+			}
 		} catch (Exception ex) {
 			DfLogger.error(this, "Error serializing session manager", null, ex);
 		}
-
 	}
 
-	private void restoreSessionManager(IMemento memento) {
+	private void restoreSessionManagers(IMemento memento) {
 		try {
 			if (memento != null) {
-				String encStr = memento.getString("SESSION_MANAGER");
-				if (encStr != null && encStr.length() > 0) {
-					byte[] encrBytes = BlowfishJC.convertHexToBytes(encStr);
-					String hostName = InetAddress.getLocalHost().getHostName();
-					byte[] decrBytes = BlowfishJC.decryptData(hostName,
-							encrBytes);
-					ByteArrayInputStream bin = new ByteArrayInputStream(
-							decrBytes);
-					ObjectInputStream objIn = new ObjectInputStream(bin);
-					IDfSessionManager sm = (IDfSessionManager) objIn
-							.readObject();
-					PluginState.setSessionManager(sm);
-
+				String keys[] = memento.getAttributeKeys();
+				for(String key : keys) {
+					if(key.startsWith("SESSION_MANAGER")) {
+						String docbaseName = key.substring("SESSION_MANAGER".length() + 1);
+						String encStr = memento.getString(key);
+						if (encStr != null && encStr.length() > 0) {
+							byte[] encrBytes = BlowfishJC.convertHexToBytes(encStr);
+							String hostName = InetAddress.getLocalHost().getHostName();
+							byte[] decrBytes = BlowfishJC.decryptData(hostName,
+									encrBytes);
+							ByteArrayInputStream bin = new ByteArrayInputStream(
+									decrBytes);
+							ObjectInputStream objIn = new ObjectInputStream(bin);
+							DocbaseInfo di = (DocbaseInfo) objIn.readObject();
+							di.restore();
+							PluginState.addExternalIdentity(di.getUserName(), di.getUserPassword(), null, docbaseName, di.getDocbrokerHost(), true, true);
+						}
+					}
 				}
-				// ObjectInputStream obj
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
-
 }

@@ -85,7 +85,7 @@ public class DocbaseListDialog extends Dialog {
 		repoListViewer.getList().setLayoutData(PluginHelper.getFormData(0, 40, 0, 100));
 
 		Button addExternalDocbase = new Button(composite, SWT.NONE);
-		addExternalDocbase.setText("Add External Docbase");
+		addExternalDocbase.setText(Messages.getString("DocbaseListDialog.0"));
 		addExternalDocbase.setLayoutData(PluginHelper.getFormData(80, 95, 50, 100));
 		addExternalDocbase.addSelectionListener(new SelectionListener() {
 			public void widgetSelected(SelectionEvent selectionEvent) {

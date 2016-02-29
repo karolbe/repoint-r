@@ -38,6 +38,7 @@ package com.documentum.devprog.eclipse.common;
 
 import com.documentum.com.DfClientX;
 import com.documentum.com.IDfClientX;
+import com.documentum.devprog.eclipse.model.DocbaseInfo;
 import com.documentum.fc.client.*;
 import com.documentum.fc.common.*;
 
@@ -53,31 +54,15 @@ import java.util.*;
  */
 public class PluginState {
 
-	static class DocbaseInfo {
-		public IDfSessionManager sessionManager;
-		public IDfClient dfClient;
-
-		public DocbaseInfo(IDfSessionManager sessionManager, IDfClient dfClient) {
-			this.sessionManager = sessionManager;
-			this.dfClient = dfClient;
-		}
-	}
-
 	private static Map<String, DocbaseInfo> sessMgrs = new HashMap<String, DocbaseInfo>();
 
 	private static Map<String, Object> s_state = null;
 
 	private static String currentDocbase = null;
 
-	private static IDfSessionManager currentSessionMgr = null;
-
 	private static String logId = PluginState.class.getName();
 
-	private static String dfcFolder = null;
-
 	private static String dmConfigFolder = null;
-
-	private static Set<String> loggedInDocbases = new HashSet<String>();
 
 	static {
 		s_state = new HashMap<String, Object>();
@@ -90,20 +75,11 @@ public class PluginState {
 	 * @return
 	 */
 	public static IDfSessionManager getSessionManager() {
-		if (currentSessionMgr == null) {
-			try {
-				currentSessionMgr = DfClient.getLocalClient().newSessionManager();
-
-			} catch (DfException dfe) {
-				DfLogger.error(logId, "Error creating session manager", null,
-						dfe);
-			}
-		}
-		return currentSessionMgr;
+		return sessMgrs.get(currentDocbase).getSessionManager();
 	}
 
-	public static void setSessionManager(IDfSessionManager sessionMgr) {
-		currentSessionMgr = sessionMgr;
+	public static Map<String, DocbaseInfo> getSessionManagers() {
+		return sessMgrs;
 	}
 
 	public static Object get(String key) {
@@ -117,9 +93,7 @@ public class PluginState {
 	public static void setDocbase(String docbase) {
 		if(sessMgrs.containsKey(docbase)) {
 			currentDocbase = docbase;
-			currentSessionMgr = sessMgrs.get(docbase).sessionManager;
 		} else {
-			currentSessionMgr = null;
 			currentDocbase = null;
 		}
 	}
@@ -164,13 +138,11 @@ public class PluginState {
 			}
 
 			IDfClient localClient = DfClient.getLocalClient();
-			sessMgrs.put(docbase, new DocbaseInfo(sessMgr, localClient));
+			sessMgrs.put(docbase, new DocbaseInfo(sessMgr, localClient, docbase, null, username, password, true));
 			setDocbase(docbase);
-			setSessionManager(sessMgr);
-			loggedInDocbases.add(docbase);
 			return true;
 		} catch (DfException dfe) {
-			DfLogger.error(logId, "Error while adding idendity", null, dfe);
+			DfLogger.error(logId, "Error while adding identity", null, dfe);
 			return false;
 		}
 	}
@@ -190,7 +162,7 @@ public class PluginState {
 	 *            delayed till a session is actually requested.
 	 */
 	public static boolean addExternalIdentity(String username, String password,
-									  String domain, String docbase, String docbroker, boolean authenticate) {
+									  String domain, String docbase, String docbroker, boolean authenticate, boolean savePassword) {
 		try {
 			IDfLoginInfo li = new DfLoginInfo();
 			li.setUser(username);
@@ -199,7 +171,7 @@ public class PluginState {
 
 
 			IDfClient externalClient;
-			externalClient = DfClient.getLocalClient();
+			externalClient = DfClient.getLocalClientEx();
 			IDfTypedObject config = externalClient.getClientConfig();
 			config.setString("primary_host", docbroker);
 			config.setInt("primary_port", 1489);
@@ -211,10 +183,8 @@ public class PluginState {
 				sessMgr.authenticate(docbase);
 			}
 
-			sessMgrs.put(docbase, new DocbaseInfo(sessMgr, externalClient));
+			sessMgrs.put(docbase, new DocbaseInfo(sessMgr, externalClient, docbase, docbroker, username, password, savePassword));
 			setDocbase(docbase);
-			setSessionManager(sessMgr);
-			loggedInDocbases.add(docbase);
 			return true;
 		} catch (DfException dfe) {
 			DfLogger.error(logId, "Error while adding external identity", null, dfe);
@@ -229,11 +199,12 @@ public class PluginState {
 	 * @return
 	 */
 	public static boolean hasIdentity(String docbase) {
+
 		DocbaseInfo docbaseInfo = sessMgrs.get(docbase);
 		if(docbaseInfo == null) {
 			return false;
 		}
-		return docbaseInfo.sessionManager.hasIdentity(docbase);
+		return docbaseInfo.getSessionManager().hasIdentity(docbase);
 	}
 
 	/**
@@ -244,7 +215,7 @@ public class PluginState {
 	public static void releaseSession(IDfSession sess) {
 		if (sess != null) {
 			try {
-				sessMgrs.get(sess.getDocbaseName()).sessionManager.release(sess);
+				sessMgrs.get(sess.getDocbaseName()).getSessionManager().release(sess);
 			} catch (DfException e) {
 				e.printStackTrace();
 			}
@@ -261,14 +232,11 @@ public class PluginState {
 	 */
 	public static IDfSession getSessionById(String id) {
 		try {
+			IDfId objId = new DfId(id);
 			for(DocbaseInfo docbaseInfo: sessMgrs.values()) {
-				IDfId objId = new DfId(id);
-				try {
-					String docbase = docbaseInfo.dfClient.getDocbaseNameFromId(objId);
-					setDocbase(docbase);
-					return getSession(docbase);
-				} catch (DfException d) {
-					// ignore
+				if(objId.getDocbaseId().equals(docbaseInfo.getDocbaseId())) {
+					setDocbase(docbaseInfo.getDocbaseName());
+					return getSession(docbaseInfo.getDocbaseName());
 				}
 			}
 			throw new DfException("No matching session");
@@ -329,27 +297,9 @@ public class PluginState {
 		return getClientX().getLocalClient();
 	}
 
-	// NOTE This method is platform specific to Windows
-	private static String guessDFCLocation() {
-		return DFCConfigurationHelper.guessDFCLocation();
-	}
-
 	// NOTE this method is platform specific to windows.
 	private static String guessConfigLocation() {
 		return DFCConfigurationHelper.guessConfigLocation();
-	}
-
-	/**
-	 * NOTE This is a System dependent method and currently only works on
-	 * Windows
-	 * 
-	 * @return
-	 */
-	public static String getDfcFolder() {
-		if (dfcFolder == null) {
-			dfcFolder = guessDFCLocation();
-		}
-		return dfcFolder;
 	}
 
 	/**

@@ -32,36 +32,23 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  * 
-  *******************************************************************************/
+ ï¿½*ï¿½
+ ï¿½*******************************************************************************/
 package com.documentum.devprog.eclipse.tree;
-
-import com.documentum.fc.common.DfException;
-
-import com.documentum.fc.client.IDfCollection;
-import com.documentum.fc.client.IDfQuery;
-import com.documentum.fc.client.IDfSession;
-import com.documentum.fc.client.IDfTypedObject;
 
 import com.documentum.devprog.eclipse.DevprogPlugin;
 import com.documentum.devprog.eclipse.common.PluginState;
 import com.documentum.devprog.eclipse.common.PreferenceConstants;
-import com.documentum.devprog.eclipse.query.DQLResultsSorter;
-
-import java.util.ArrayList;
-
-import org.eclipse.jface.viewers.IStructuredSelection;
+import com.documentum.fc.client.*;
+import com.documentum.fc.common.DfException;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
-
-import com.documentum.com.IDfClientX;
 
 /**
  * 
@@ -144,10 +131,9 @@ public class ListFiller implements Runnable {
 			String strQuery = bufQuery.toString();
 			System.out.println("Folder query: " + strQuery);
 
-			IDfClientX cx = PluginState.getClientX();
-			IDfQuery query = cx.getQuery();
-			query.setDQL(strQuery);
 			sess = PluginState.getSessionById(folderId);
+			IDfQuery query = new DfQuery();
+			query.setDQL(strQuery);
 			folderColl = query.execute(sess, IDfQuery.DF_READ_QUERY);
 			System.out.println("Folder Coll: " + folderColl.getAttrCount());
 
@@ -160,7 +146,7 @@ public class ListFiller implements Runnable {
 				bufQuery.append(folderId).append("')) ORDER BY 1");
 				strQuery = bufQuery.toString();
 				// System.out.println("Doc Query: " + strQuery);
-				query = cx.getQuery();
+				query = new DfQuery();
 				query.setDQL(strQuery);
 				docColl = query.execute(sess, IDfQuery.DF_READ_QUERY);
 			}

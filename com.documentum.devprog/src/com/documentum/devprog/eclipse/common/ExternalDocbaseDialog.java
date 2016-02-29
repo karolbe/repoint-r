@@ -20,6 +20,8 @@ public class ExternalDocbaseDialog extends Dialog {
 
     private String selectedDocbase;
 
+    private boolean savePassword = false;
+
     protected ExternalDocbaseDialog(Shell parentShell) {
         super(parentShell);
     }
@@ -74,6 +76,20 @@ public class ExternalDocbaseDialog extends Dialog {
         passText = new Text(composite, SWT.BORDER | SWT.PASSWORD);
         passText.setLayoutData(PluginHelper.getFormData(60, 75, 25, 80));
 
+        final Button savePassButton = new Button(composite, SWT.CHECK);
+        savePassButton.setText("Remember Password");
+        savePassButton.setLayoutData(PluginHelper.getFormData(75, 90, 25, 80));
+
+        savePassButton.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent selectionEvent) {
+                savePassword = savePassButton.getSelection();
+            }
+
+            public void widgetDefaultSelected(SelectionEvent selectionEvent) {
+
+            }
+        });
+
         return parent;
     }
 
@@ -84,7 +100,7 @@ public class ExternalDocbaseDialog extends Dialog {
         String password = loginText.getText();
         String docbroker = docbrokerHost.getText();
         super.okPressed();
-        PluginState.addExternalIdentity(login, password, null, selectedDocbase, docbroker, true);
+        PluginState.addExternalIdentity(login, password, null, selectedDocbase, docbroker, true, savePassword);
     }
 
     private void updateDocbaseList() {

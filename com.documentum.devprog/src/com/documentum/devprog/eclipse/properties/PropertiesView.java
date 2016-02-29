@@ -468,8 +468,7 @@ public class PropertiesView extends ViewPart {
 			if (id.isNull() || id.isObjectId() == false) {
 				return;
 			} else {
-				String docbaseName = DfClient.getLocalClient()
-						.getDocbaseNameFromId(id);
+				String docbaseName = PluginState.getDocbase();
 				if (PluginState.hasIdentity(docbaseName) == false) {
 					DocbaseLoginDialog loginDlg = new DocbaseLoginDialog(this
 							.getSite().getShell());

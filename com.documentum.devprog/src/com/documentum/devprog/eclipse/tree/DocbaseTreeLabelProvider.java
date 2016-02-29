@@ -26,8 +26,8 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
- *******************************************************************************/
+ï¿½*ï¿½
+ï¿½*******************************************************************************/
 
 /*
  * Created on Mar 3, 2004
@@ -35,27 +35,24 @@
  */
 package com.documentum.devprog.eclipse.tree;
 
-import com.documentum.fc.common.DfException;
-import com.documentum.fc.common.DfLogger;
-import com.documentum.fc.common.IDfBasicAttributes;
-import com.documentum.fc.common.IDfId;
-
+import com.documentum.devprog.eclipse.common.CommonConstants;
+import com.documentum.devprog.eclipse.common.PluginHelper;
+import com.documentum.devprog.eclipse.common.PluginState;
 import com.documentum.fc.client.IDfSession;
 import com.documentum.fc.client.IDfSysObject;
 import com.documentum.fc.client.IDfTypedObject;
 import com.documentum.fc.client.IDfVirtualDocumentNode;
-
-import com.documentum.devprog.eclipse.common.CommonConstants;
-import com.documentum.devprog.eclipse.common.PluginHelper;
-import com.documentum.devprog.eclipse.common.PluginState;
+import com.documentum.fc.common.DfException;
+import com.documentum.fc.common.DfLogger;
+import com.documentum.fc.common.IDfBasicAttributes;
+import com.documentum.fc.common.IDfId;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.swt.graphics.Image;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.swt.graphics.Image;
 
 /**
  * @author Aashish Patil (aashish.patil@documentum.com)
@@ -147,7 +144,7 @@ public class DocbaseTreeLabelProvider extends LabelProvider {
 	 * 
 	 * @see org.eclipse.jface.viewers.ILabelProvider#getText(java.lang.Object)
 	 */
-	public String getText(Object element) {
+	public synchronized String getText(Object element) {
 		DocbaseItem treeData = (DocbaseItem) element;
 		Integer nodeType = treeData.getType();
 		try {
