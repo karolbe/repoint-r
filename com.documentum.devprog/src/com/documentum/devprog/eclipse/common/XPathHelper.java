@@ -26,8 +26,8 @@
  * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- * 
- *******************************************************************************/
+ï¿½*ï¿½
+ï¿½*******************************************************************************/
 
 /*
  * Created on Mar 31, 2005
@@ -35,8 +35,6 @@
  * 
  */
 package com.documentum.devprog.eclipse.common;
-
-import com.documentum.fc.common.DfLogger;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -46,9 +44,13 @@ import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
-import org.apache.xerces.parsers.DOMParser;
-import org.apache.xpath.domapi.XPathEvaluatorImpl;
+//import org.apache.xerces.parsers.DOMParser;
+//import org.apache.xpath.domapi.XPathEvaluatorImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -57,6 +59,9 @@ import org.w3c.dom.xpath.XPathEvaluator;
 import org.w3c.dom.xpath.XPathNSResolver;
 import org.w3c.dom.xpath.XPathResult;
 import org.xml.sax.SAXException;
+
+import com.documentum.fc.common.DfLogger;
+import com.documentum.services.config.ConfigException;
 
 /**
  * This class represents a helper to access and manipulate an XML document using
@@ -97,7 +102,7 @@ public class XPathHelper {
 
 	// private static DOMParser s_docBldr = null;
 
-	private DOMParser m_domParser = null;
+	//private DOMParser m_domParser = null;
 
 	private static String XERCES_DOM_FACT = "org.apache.xerces.jaxp.DocumentBuilderFactoryImpl";
 
@@ -144,19 +149,27 @@ public class XPathHelper {
 
 	private void initDOMParser() {
 
+		javax.xml.parsers.DocumentBuilderFactory dfactory = DocumentBuilderFactory.newInstance();
+		//dfactory.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
 		try {
-			m_domParser = new DOMParser();
-			m_domParser
-					.setFeature(
-							"http://apache.org/xml/features/nonvalidating/load-external-dtd",
-							false);
-			m_domParser.setFeature(
-					"http://apache.org/xml/features/dom/defer-node-expansion",
-					false);
-
-		} catch (Exception ex) {
-			DfLogger.debug(this, "", null, ex);
+			DocumentBuilder docBuilder  = dfactory.newDocumentBuilder();
+		} catch (ParserConfigurationException e) {
+			DfLogger.debug(this, "", null, e);
+			
 		}
+//		try {
+//			m_domParser = new DOMParser();
+//			m_domParser
+//					.setFeature(
+//							"http://apache.org/xml/features/nonvalidating/load-external-dtd",
+//							false);
+//			m_domParser.setFeature(
+//					"http://apache.org/xml/features/dom/defer-node-expansion",
+//					false);
+//
+//		} catch (Exception ex) {
+//			DfLogger.debug(this, "", null, ex);
+//		}
 
 	}
 
@@ -425,15 +438,23 @@ public class XPathHelper {
 	 * 
 	 */
 	private void setupXPathParams() {
-		m_xpathEval = new XPathEvaluatorImpl(m_confDoc);
-
+		XPathFactory xfac = XPathFactory.newInstance();		
+		XPath xpath  = xfac.newXPath();
+		
+		//xpath.evaluate("", m_contextNode, XPathConstants.NODESET);
+		//NamespaceContext nsContext =  null;
+		//m_contextNode.getOwnerDocument().getNamespaceURI();
+		//xpath.setNamespaceContext(nsContext);
+		
+//		m_xpathEval = new XPathEvaluatorImpl(m_confDoc);
+//
 		if ((m_contextNode == null) && (m_confDoc != null)) {
 			Element boconfigElem = m_confDoc.getDocumentElement();
 			m_contextNode = boconfigElem;
 		}
-
-		XPathNSResolver nsResolver = m_xpathEval.createNSResolver(m_confDoc);
-		m_nsResolver = nsResolver;
+//
+//		XPathNSResolver nsResolver = m_xpathEval.createNSResolver(m_confDoc);		
+//		m_nsResolver = nsResolver;
 	}
 
 	/*
@@ -444,18 +465,32 @@ public class XPathHelper {
 	 * java.lang.String)
 	 */
 	public Node[] getValuesAsXMLNodes(String expression) {
-
-		XPathResult results = (XPathResult) m_xpathEval.evaluate(expression,
-				m_contextNode, m_nsResolver,
-				XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null);
-		ArrayList lstResults = new ArrayList(5);
-
-		Node curResult = null;
-		while ((curResult = results.iterateNext()) != null) {
+//
+//		XPathResult results = (XPathResult) m_xpathEval.evaluate(expression,
+//				m_contextNode, m_nsResolver,
+//				XPathResult.UNORDERED_NODE_ITERATOR_TYPE, null);
+		
+		XPathFactory xfac = XPathFactory.newInstance();		
+		XPath xpath  = xfac.newXPath();
+		NodeList results =null;
+		ArrayList<Node> lstResults = new ArrayList<>(5);
+		try {
+			results = (NodeList)xpath.evaluate("", m_contextNode, XPathConstants.NODESET);
+			Node curResult = null;
+		//while ((curResult = results.iterateNext()) != null) {
+		int index = 0;
+		while( index <results.getLength()) {
+			curResult = results.item(index++);
 			lstResults.add(curResult);
+		}
+		
+		} catch (XPathExpressionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		Node arrNode[] = new Node[lstResults.size()];
 		lstResults.toArray(arrNode);
+		
 		return arrNode;
 
 	}

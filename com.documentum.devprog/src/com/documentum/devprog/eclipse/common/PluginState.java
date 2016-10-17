@@ -90,12 +90,20 @@ public class PluginState {
 		s_state.put(key, value);
 	}
 
-	public static void setDocbase(String docbase) {
+	/**
+	 * 
+	 * @param docbase
+	 * @return true if a sessionManager for the docbase exists.  
+	 */
+	public static boolean setDocbase(String docbase) {
+		boolean ret = false;
 		if(sessMgrs.containsKey(docbase)) {
 			currentDocbase = docbase;
+			ret = true;
 		} else {
 			currentDocbase = null;
 		}
+		return ret;
 	}
 
 	public static String getDocbase() {
@@ -121,25 +129,42 @@ public class PluginState {
 	 *            authenticated. false indicates that authentication should be
 	 *            delayed till a session is actually requested.
 	 */
-	public static boolean addIdentity(String username, String password,
-									  String domain, String docbase, boolean authenticate) {
+	public static boolean addIdentity(String username, String password, String domain, String docbase,
+			boolean authenticate) {
 		try {
 			IDfLoginInfo li = new DfLoginInfo();
 			li.setUser(username);
 			li.setPassword(password);
 			li.setDomain(domain);
+			IDfClient localClient = DfClient.getLocalClient();
+			IDfSessionManager sessMgr = null;
 
-			IDfSessionManager sessMgr = getSessionManager();
-			sessMgr.clearIdentity(docbase);
+			if (setDocbase(docbase)) {
+				// sessionManager available
+
+				sessMgr = getSessionManager();
+				if (hasIdentity(docbase)) {
+					sessMgr.clearIdentity(docbase);
+				}
+				sessMgr.setIdentity(docbase, li);
+
+				if (authenticate) {
+					sessMgr.authenticate(docbase);
+				}
+			} else {
+				// SessionManage not available (yet).
+				sessMgr = localClient.newSessionManager();
+				sessMgr.clearIdentity(docbase);
+			}
 			sessMgr.setIdentity(docbase, li);
-
 			if (authenticate) {
 				sessMgr.authenticate(docbase);
 			}
 
-			IDfClient localClient = DfClient.getLocalClient();
 			sessMgrs.put(docbase, new DocbaseInfo(sessMgr, localClient, docbase, null, username, password, true));
+
 			setDocbase(docbase);
+
 			return true;
 		} catch (DfException dfe) {
 			DfLogger.error(logId, "Error while adding identity", null, dfe);
@@ -234,10 +259,18 @@ public class PluginState {
 		try {
 			IDfId objId = new DfId(id);
 			for(DocbaseInfo docbaseInfo: sessMgrs.values()) {
-				if(objId.getDocbaseId().equals(docbaseInfo.getDocbaseId())) {
-					setDocbase(docbaseInfo.getDocbaseName());
+				//DfClient.getLocalClientEx().getDocbaseNameFromDocbaseId(id);
+				String docbase = docbaseInfo.getClient().getDocbaseNameFromId(objId);
+				if(docbase!=null)
+				{
+					setDocbase(docbaseInfo.getDocbaseName()); //redundant, because setSession() calls setDocbase()
 					return getSession(docbaseInfo.getDocbaseName());
 				}
+				
+//				if(objId.getDocbaseId().equals(docbaseInfo.getDocbaseId())) {
+//					setDocbase(docbaseInfo.getDocbaseName());
+//					return getSession(docbaseInfo.getDocbaseName());
+//				}
 			}
 			throw new DfException("No matching session");
 		} catch (DfException dfe) {

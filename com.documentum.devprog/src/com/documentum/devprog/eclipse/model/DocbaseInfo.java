@@ -35,7 +35,8 @@ public class DocbaseInfo implements Serializable {
         this.savePassword = savePassword;
         this.docbaseName = docbase;
         try {
-            this.docbaseId = Integer.toHexString(Integer.parseInt(sessionManager.getSession(docbase).getDocbaseId()));
+            this.docbaseId = Integer.toHexString(Integer.parseInt(sessionManager.getSession(docbase).getDocbaseId()));	//this is not correct. leading zeros are missing
+            //sessionManager.getSession(docbase).getDocbaseConfig().getObjectId()
         } catch (DfException e) {
             e.printStackTrace();
         }
@@ -47,6 +48,11 @@ public class DocbaseInfo implements Serializable {
 
     public String getUserPassword() {
         return userPassword;
+    }
+    
+    public IDfClient getClient()
+    {
+    	return  dfClient;
     }
 
     public IDfSessionManager getSessionManager() {
