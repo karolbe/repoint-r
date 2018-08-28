@@ -79,10 +79,20 @@ import java.util.List;
 import java.util.PropertyResourceBundle;
 import java.util.Set;
 
-import org.apache.xml.serialize.DOMSerializer;
-import org.apache.xml.serialize.Method;
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.XMLSerializer;
+import javax.xml.stream.XMLOutputFactory;
+import javax.xml.stream.XMLStreamWriter;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+//import org.apache.xml.serialize.DOMSerializer;
+//import org.apache.xml.serialize.Method;
+//import org.apache.xml.serialize.OutputFormat;
+//import org.apache.xml.serialize.XMLSerializer;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -124,8 +134,8 @@ public class PluginHelper {
 			DfClient.getDFCVersion());
 
 	public static List<String> getSortedDocbaseList() throws DfException {
-		return PluginState.getDocbases();
-/*
+//		return PluginState.getDocbases();
+
 		ArrayList<String> dbLst = new ArrayList<String>();
 
 		IDfClient localClient = DfClient.getLocalClient();
@@ -137,7 +147,6 @@ public class PluginHelper {
 		Collections.sort(dbLst);
 
 		return dbLst;
-*/
 	}
 
 	public static void showPropertiesView(String objectId) {
@@ -257,17 +266,35 @@ public class PluginHelper {
 	public static String serializeDOMToString(Element node) {
 		try {
 			CharArrayWriter arrWriter = new CharArrayWriter();
-			OutputFormat xmlOutputFormat = new OutputFormat(Method.XML, null,
-					true);
+//			OutputFormat xmlOutputFormat = new OutputFormat(Method.XML, null,
+//					true);
 			// xmlOutputFormat.setOmitXMLDeclaration(true);
-			xmlOutputFormat.setIndenting(false);
-			xmlOutputFormat.setLineWidth(0);
-			XMLSerializer writer = new XMLSerializer(arrWriter, xmlOutputFormat);
-			DOMSerializer domSerializer = writer.asDOMSerializer();
-			domSerializer.serialize(node);
+//			xmlOutputFormat.setIndenting(false);
+//			xmlOutputFormat.setLineWidth(0);
+//			XMLSerializer writer = new XMLSerializer(arrWriter, xmlOutputFormat);
+//			DOMSerializer domSerializer = writer.asDOMSerializer();
+//			domSerializer.serialize(node);
+			
+			//XMLStreamWriter xmlsw = XMLOutputFactory.newInstance().createXMLStreamWriter(arrWriter);			
+			TransformerFactory transFactory = TransformerFactory.newInstance();
+			Transformer transformer;
+	
+				transformer = transFactory.newTransformer();
+				transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+				transformer.setOutputProperty(OutputKeys.INDENT, "false");			
+				transformer.transform(new DOMSource(node) , new StreamResult(arrWriter));
+	
 
 			return arrWriter.toString();
-		} catch (IOException ioe) {
+//		} catch (IOException  ioe) {
+//			return "";
+		} catch (TransformerConfigurationException tce)
+		{
+			tce.printStackTrace();
+			return "";
+		}
+		catch(TransformerException e) {
+			e.printStackTrace();
 			return "";
 		}
 
